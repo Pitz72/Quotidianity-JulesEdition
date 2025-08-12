@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quotidianity</string>
+
+    <!-- Home Screen -->
+    <string name="home_screen_title">Quotidianity</string>
+    <string name="add_list_fab_description">添加列表</string>
+    <string name="no_lists_placeholder">暂无列表。点击“+”创建一个！</string>
+
+    <!-- Add/Edit List Screen -->
+    <string name="add_list_screen_title">新列表</string>
+    <string name="list_title_label">列表标题</string>
+    <string name="choose_color_label">选择颜色：</string>
+    <string name="save_list_button">保存列表</string>
+
+    <!-- Details Screen -->
+    <string name="list_details_placeholder">列表ID的详细信息：%1$d</string>
+
+    <!-- Common -->
+    <string name="back_button_description">返回</string>
+</resources>

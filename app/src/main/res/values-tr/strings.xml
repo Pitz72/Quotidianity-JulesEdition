@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quotidianity</string>
+
+    <!-- Home Screen -->
+    <string name="home_screen_title">Quotidianity</string>
+    <string name="add_list_fab_description">Liste Ekle</string>
+    <string name="no_lists_placeholder">Henüz liste yok. Oluşturmak için \'+\' simgesine dokunun!</string>
+
+    <!-- Add/Edit List Screen -->
+    <string name="add_list_screen_title">Yeni Liste</string>
+    <string name="list_title_label">Liste Başlığı</string>
+    <string name="choose_color_label">Bir renk seçin:</string>
+    <string name="save_list_button">Listeyi Kaydet</string>
+
+    <!-- Details Screen -->
+    <string name="list_details_placeholder">Liste ID\'si için ayrıntılar: %1$d</string>
+
+    <!-- Common -->
+    <string name="back_button_description">Geri</string>
+</resources>

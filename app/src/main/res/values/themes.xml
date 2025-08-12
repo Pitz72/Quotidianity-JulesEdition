@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- Splash Screen Theme. -->
+  <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+    <item name="windowSplashScreenBackground">@color/navy_dark</item>
+    <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+    <item name="postSplashScreenTheme">@style/Theme.Quotidianity</item>
+  </style>
+
+  <!-- Base application theme. -->
+  <style name="Theme.Quotidianity" parent="Theme.Material3.Dark.NoActionBar">
+    <item name="colorPrimary">@color/navy_dark</item>
+    <item name="colorOnPrimary">@color/teal_accent</item>
+    <item name="android:statusBarColor">@color/navy_dark</item>
+    <item name="android:navigationBarColor">@color/navy_dark</item>
+  </style>
+</resources>

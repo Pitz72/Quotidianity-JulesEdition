@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quotidianity</string>
+
+    <!-- Home Screen -->
+    <string name="home_screen_title">Quotidianity</string>
+    <string name="add_list_fab_description">Dodaj listę</string>
+    <string name="no_lists_placeholder">Brak list. Dotknij \'+\', aby utworzyć nową!</string>
+
+    <!-- Add/Edit List Screen -->
+    <string name="add_list_screen_title">Nowa lista</string>
+    <string name="list_title_label">Tytuł listy</string>
+    <string name="choose_color_label">Wybierz kolor:</string>
+    <string name="save_list_button">Zapisz listę</string>
+
+    <!-- Details Screen -->
+    <string name="list_details_placeholder">Szczegóły dla ID listy: %1$d</string>
+
+    <!-- Common -->
+    <string name="back_button_description">Wstecz</string>
+</resources>
