@@ -14,8 +14,16 @@ class TaskRepository(private val taskDao: TaskDao) {
         return taskDao.getSubTasks(parentId)
     }
 
+    fun getTaskListById(id: Int): Flow<TaskList> {
+        return taskDao.getTaskListById(id)
+    }
+
     suspend fun insertTaskList(taskList: TaskList) {
         taskDao.insertTaskList(taskList)
+    }
+
+    suspend fun updateTaskList(taskList: TaskList) {
+        taskDao.updateTaskList(taskList)
     }
 
     suspend fun insertTask(task: Task) {

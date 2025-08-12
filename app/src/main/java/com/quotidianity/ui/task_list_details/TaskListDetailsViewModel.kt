@@ -39,6 +39,20 @@ class TaskListDetailsViewModel(
             repository.updateTask(task.copy(isCompleted = !task.isCompleted))
         }
     }
+
+    fun deleteTask(task: Task) {
+        viewModelScope.launch {
+            repository.deleteTask(task)
+        }
+    }
+
+    fun updateTaskTitle(task: Task, newTitle: String) {
+        viewModelScope.launch {
+            if (newTitle.isNotBlank()) {
+                repository.updateTask(task.copy(title = newTitle))
+            }
+        }
+    }
 }
 
 class TaskListDetailsViewModelFactory(

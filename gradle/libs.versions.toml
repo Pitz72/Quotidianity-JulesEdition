@@ -1,6 +1,10 @@
 [versions]
 agp = "8.4.0"
+googleApiClientAndroid = "2.2.0"
+googleServicesPlugin = "4.4.1"
+googleApiServicesCalendar = "v3-rev20220715-2.0.0"
 kotlin = "1.9.23"
+playServicesAuth = "21.0.0"
 coreKtx = "1.13.1"
 coroutinesTest = "1.7.3"
 coreSplashScreen = "1.0.1"
@@ -36,9 +40,13 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
+google-api-client-android = { group = "com.google.api-client", name = "google-api-client-android", version.ref = "googleApiClientAndroid" }
+google-api-services-calendar = { group = "com.google.apis", name = "google-api-services-calendar", version.ref = "googleApiServicesCalendar" }
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 devtools-ksp = { id = "com.google.devtools.ksp", version = "1.9.23-1.0.20" }

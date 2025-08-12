@@ -25,6 +25,9 @@ interface TaskDao {
     @Query("SELECT * FROM task_lists ORDER BY id DESC")
     fun getAllTaskLists(): Flow<List<TaskList>>
 
+    @Query("SELECT * FROM task_lists WHERE id = :id")
+    fun getTaskListById(id: Int): Flow<TaskList>
+
     // --- Task Queries ---
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

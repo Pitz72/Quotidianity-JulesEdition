@@ -15,11 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.quotidianity.QuotidianityApplication
 import com.quotidianity.R
 
 val defaultCategoryColors = mapOf(
@@ -34,19 +31,16 @@ val defaultCategoryColors = mapOf(
 @Composable
 fun AddTaskListScreen(
     modifier: Modifier = Modifier,
+    viewModel: AddTaskListViewModel,
     onNavigateBack: () -> Unit
 ) {
-    val viewModel: AddTaskListViewModel = viewModel(
-        factory = AddTaskListViewModelFactory((LocalContext.current.applicationContext as QuotidianityApplication).repository)
-    )
-    var title by remember { mutableStateOf("") }
-    var selectedColorHex by remember { mutableStateOf(defaultCategoryColors.values.first()) }
+    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(id = R.string.add_list_screen_title)) },
+                title = { Text(if (uiState.isEditing) "Edit List" else stringResource(id = R.string.add_list_screen_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.back_button_description))
@@ -63,8 +57,8 @@ fun AddTaskListScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
-                value = title,
-                onValueChange = { title = it },
+                value = uiState.title,
+                onValueChange = { viewModel.onTitleChange(it) },
                 label = { Text(stringResource(id = R.string.list_title_label)) },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -72,16 +66,16 @@ fun AddTaskListScreen(
             Text(stringResource(id = R.string.choose_color_label), style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(16.dp))
             ColorSelector(
-                selectedColorHex = selectedColorHex,
-                onColorSelected = { selectedColorHex = it }
+                selectedColorHex = uiState.colorHex,
+                onColorSelected = { viewModel.onColorChange(it) }
             )
             Spacer(modifier = Modifier.height(32.dp))
             Button(
                 onClick = {
-                    viewModel.addTaskList(title, selectedColorHex)
+                    viewModel.saveTaskList()
                     onNavigateBack()
                 },
-                enabled = title.isNotBlank()
+                enabled = uiState.title.isNotBlank()
             ) {
                 Text(stringResource(id = R.string.save_list_button))
             }

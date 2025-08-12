@@ -6,10 +6,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,18 +27,49 @@ import com.quotidianity.data.TaskList
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onFabClick: () -> Unit,
-    onTaskListClick: (Int) -> Unit
+    onTaskListClick: (Int) -> Unit,
+    onSettingsClick: () -> Unit,
+    onTaskListEdit: (Int) -> Unit
 ) {
     val viewModel: HomeViewModel = viewModel(
         factory = HomeViewModelFactory((LocalContext.current.applicationContext as QuotidianityApplication).repository)
     )
     val taskLists by viewModel.allTaskLists.collectAsState()
+    var showDeleteDialog by remember { mutableStateOf<TaskList?>(null) }
+
+    if (showDeleteDialog != null) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = null },
+            title = { Text("Delete List") },
+            text = { Text("Are you sure you want to delete the list \"${showDeleteDialog?.title}\"? This action cannot be undone.") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showDeleteDialog?.let { viewModel.deleteTaskList(it) }
+                        showDeleteDialog = null
+                    }
+                ) {
+                    Text("Delete")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { showDeleteDialog = null }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(id = R.string.home_screen_title)) },
+                actions = {
+                    IconButton(onClick = onSettingsClick) {
+                        Icon(Icons.Default.Settings, contentDescription = "Settings")
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 )
@@ -66,7 +98,12 @@ fun HomeScreen(
                     .padding(horizontal = 8.dp)
             ) {
                 items(taskLists) { taskList ->
-                    TaskListCard(taskList = taskList, onClick = { onTaskListClick(taskList.id) })
+                    TaskListCard(
+                        taskList = taskList,
+                        onClick = { onTaskListClick(taskList.id) },
+                        onDeleteClick = { showDeleteDialog = taskList },
+                        onEditClick = { onTaskListEdit(taskList.id) }
+                    )
                 }
             }
         }
@@ -78,6 +115,8 @@ fun HomeScreen(
 fun TaskListCard(
     taskList: TaskList,
     onClick: () -> Unit,
+    onDeleteClick: () -> Unit,
+    onEditClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -90,7 +129,7 @@ fun TaskListCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
@@ -99,7 +138,13 @@ fun TaskListCard(
                     .background(color = Color(android.graphics.Color.parseColor(taskList.categoryColor)))
             )
             Spacer(modifier = Modifier.width(16.dp))
-            Text(text = taskList.title, style = MaterialTheme.typography.titleMedium)
+            Text(text = taskList.title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            IconButton(onClick = onEditClick) {
+                Icon(Icons.Default.Edit, contentDescription = "Edit List")
+            }
+            IconButton(onClick = onDeleteClick) {
+                Icon(Icons.Default.Delete, contentDescription = "Delete List")
+            }
         }
     }
 }

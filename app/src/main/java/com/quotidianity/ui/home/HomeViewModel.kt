@@ -8,6 +8,7 @@ import com.quotidianity.data.TaskList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: TaskRepository) : ViewModel() {
 
@@ -16,6 +17,18 @@ class HomeViewModel(private val repository: TaskRepository) : ViewModel() {
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList()
     )
+
+    fun deleteTaskList(taskList: TaskList) {
+        viewModelScope.launch {
+            repository.deleteTaskList(taskList)
+        }
+    }
+
+    fun updateTaskList(taskList: TaskList) {
+        viewModelScope.launch {
+            repository.updateTaskList(taskList)
+        }
+    }
 }
 
 class HomeViewModelFactory(private val repository: TaskRepository) : ViewModelProvider.Factory {
